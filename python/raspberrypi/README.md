@@ -57,7 +57,6 @@ Provide an raspberrypi library to get weight by reading data from HX711.
 
 MCU                | Work Well    | Work Wrong   | Untested    | Remarks
 ------------------ | :----------: | :----------: | :---------: | -----
-
 树莓派 3       |      √       |              |             | 
 树莓派 4       |      √       |              |             | 
 
