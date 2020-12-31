@@ -21,7 +21,7 @@ int DFRobot_HX711_I2C::begin(void){
     Wire.begin();
     DBG("\r\n");
     Wire.beginTransmission(_address);
-    _pWire->write(0x70);
+    _pWire->write(REG_DATA_INIT_SENSOR);
     if(Wire.endTransmission() == 0) {
       DBG("\r\n");
      _offset = average(10);

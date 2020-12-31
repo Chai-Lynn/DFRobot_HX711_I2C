@@ -27,7 +27,7 @@
 #define DBG(...)
 #endif
 
-#define HX711_I2C_ADDR  (0x60)  /*sensor IIC address*/
+#define HX711_I2C_ADDR  (0x64)  /*sensor IIC address*/
 
 //#define ERR_OK             0      //ok
 //#define ERR_DATA_BUS      -1      //error in data bus
@@ -37,14 +37,14 @@ class DFRobot_HX711_I2C
 {
 public:
   #define REG_DATA_GET_RAM_DATA       0x66     /*Get sensor raw data*/
-  #define REG_DATA_GET_CALIBRATION    0x67     /*Get the low byte of command voc*/
-  #define REG_DATA_SET_CALIBRATION    0x68     /*Get the high byte of command Version*/
-  #define REG_DATA_GET_PEEL_FLAG      0x69     /*Get the high byte of command Version*/
+  #define REG_DATA_GET_CALIBRATION    0x67     /*获取自动校准值*/
+  #define REG_DATA_GET_PEEL_FLAG      0x69     /*获取去皮标致位*/
+  #define REG_DATA_INIT_SENSOR        0x70     /*获取去皮标致位*/
   
     /*!
      * @brief Constructor 
      * @param pWire I2c controller
-     * @param addr  I2C address
+     * @param addr  I2C address(0x64/0x65/0x660x67)
      */
     DFRobot_HX711_I2C(TwoWire * pWire = &Wire,uint8_t addr = HX711_I2C_ADDR);
     
@@ -79,15 +79,16 @@ private:
     long average(uint8_t times = 10);
   /**
    * @brief Write command into sensor chip 
-   * @param pBuf  Data included in command
+   * @param 
+   * @param data  Data included in command
    * @param size  The number of the byte of command
    */
     int readReg(uint8_t reg,uint8_t * data ,size_t size);
   /**
    * @brief Write command into sensor chip 
-   * @param pBuf  Data included in command
+   * @param reg  
+   * @param data  Data included in command
    * @param size  The number of the byte of command
-   * @return      Return 0 if the reading is done, otherwise return non-zero. 
    */
     uint8_t  writeReg(uint8_t reg,const void *data,size_t size);   
     uint8_t _address;

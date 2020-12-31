@@ -2,9 +2,10 @@
 """
    @file getCalibration.ino
    @brief 获取传感器的校准值，在运行此程序前要对传感器进行校准操作
-   @n 1.先要按下传感器模块上的rst按钮去皮�?
-   @n 2.放上100g质量的物�?一定要�?00g的物�?，按下cal按钮使传感器计算得出准确的校准值，
-   @n 3.传感器会�?s内完成校�?红灯闪烁代表校准完成，这是便可以通过此程序获取校准�?
+   @n 1.先要按下传感器模块上的CAL按钮,传感器会自动去除皮重,完成后CAL指示灯会点亮
+   @n 2.5s内放上100g质量的物体(一定要是100g的物体)，指示灯熄灭表示模块会开始校准
+   @n 3.校准完成后指示灯再一秒内闪烁3次表示校准完成
+   @n 4.若没有放上100g物品，则指示灯在五秒后熄灭，此次校准无效
    @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
    @licence     The MIT License (MIT)
    @author [fengli](li.feng@dfrobot.com)
@@ -26,13 +27,10 @@ IIC_ADDRESS      = 0x60            # default iic device address
 '''
 hx711 = DFRobot_HX711_I2C(IIC_MODE ,IIC_ADDRESS)
 
-"""
-     @brief 初始化函�?
-"""
 time.sleep(0.1)
-#设置I2C地址
 
 print("the calibration value of the sensor is: ")
+#获取自动校准值
 calibration = hx711.getCalibration()
 print(calibration[0])
 time.sleep(0.1)

@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """
    @file readWeight.ino
-   @brief 获取物体的重�?
+   @brief 获取物体的重量,按下模块上的rst按键，程序会自动去皮
    @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
    @licence     The MIT License (MIT)
    @author [fengli](li.feng@dfrobot.com)
@@ -23,13 +23,13 @@ IIC_ADDRESS      = 0x60        # default i2c device address
 '''
 hx711 = DFRobot_HX711_I2C(IIC_MODE ,IIC_ADDRESS)
 """
-     @brief 初始化函�?
+     @brief 初始化函数
 """
 
 hx711.begin()
 
 print("start\r\n")
-#手动设置校准校准�?
+#手动设置校准校准值
 hx711.setCalibration(2242.0)
 while(1):
   data = hx711.readWeight(10)
