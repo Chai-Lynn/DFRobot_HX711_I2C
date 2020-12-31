@@ -27,7 +27,7 @@ Provide an raspberrypi library to get weight by reading data from HX711.
 
 ## Methods
 
-```C++
+```py
 
   def begin():
     '''
