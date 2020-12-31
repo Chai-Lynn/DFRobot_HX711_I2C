@@ -33,20 +33,17 @@ Provide an raspberrypi library to get weight by reading data from HX711.
     '''
       @brief 模块初始化
     '''
-
   def readWeight(self ,times):
     '''
       @brief 获取物体重量
       @param times: 从这么多测量次数中求取平均
       @return  物体重量, (g)
     '''
-
   def getCalibration(self):
     '''
       @brief 获取重量传感器模块自动校准值
       @return 自动校准值
     '''
-
   def setCalibration(self):
     '''
       @brief 手动设置自动校准值
