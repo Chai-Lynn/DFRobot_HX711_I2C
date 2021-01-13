@@ -16,7 +16,7 @@ sys.path.append("../..")
 from DFRobot_HX711_I2C import *
 
 IIC_MODE         = 0x01            # default use IIC1
-IIC_ADDRESS      = 0x60        # default i2c device address
+IIC_ADDRESS      = 0x64        # default i2c device address
 '''
    # The first  parameter is to select iic0 or iic1
    # The second parameter is the iic device address

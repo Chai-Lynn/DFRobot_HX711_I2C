@@ -102,7 +102,22 @@ long DFRobot_HX711_I2C::getValue(){
    //Serial.println(value^0x800000);
    return (value^0x800000);
 }
+void DFRobot_HX711_I2C::setThreshold(uint16_t threshold){
+   uint8_t txData[2];
+   txData[0] = threshold >> 8;
+   txData[1] = threshold & 0xFF;
+   writeReg(REG_SET_CAL_THRESHOLD,txData,2);
+   delay(50);
 
+
+}
+void DFRobot_HX711_I2C::setCalWeight(uint16_t triWeight){
+   uint8_t txData[2];
+   txData[0] = triWeight >> 8;
+   txData[1] = triWeight & 0xFF;
+   writeReg(REG_SET_TRIGGER_WEIGHT,txData,2);
+   delay(50);
+}
 int DFRobot_HX711_I2C::readReg(uint8_t reg,uint8_t * data ,size_t size){
 
     _pWire->beginTransmission(_address);

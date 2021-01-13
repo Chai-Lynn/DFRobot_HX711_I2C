@@ -14,7 +14,8 @@ class DFRobot_HX711_I2C(object):
   REG_DATA_GET_CALIBRATION   = 0x67
   REG_DATA_SET_CALIBRATION   = 0x68
   REG_DATA_GET_PEEL_FLAG     = 0x69
-  
+  REG_SET_CAL_THRESHOLD      = 0x71    
+  REG_SET_TRIGGER_WEIGHT     = 0x72 
   
   ''' Conversion data '''
   rxbuf      = [0,0,0,0]
@@ -67,6 +68,7 @@ class DFRobot_HX711_I2C(object):
       return struct.unpack('>f', aa)
   ''' Modify i2c device number '''
   def setCalibration(self ,value):
+      self._offset = self.average(15)
       self._calibration = value
   def peelFlag(self):
       data = self.read_reg(self.REG_DATA_GET_PEEL_FLAG,1);
@@ -84,6 +86,22 @@ class DFRobot_HX711_I2C(object):
       else:
         return 0
       return value^0x800000
+  def setCalWeight(self,triWeight):
+   txData = [0,0]
+   txData[0] = triWeight >> 8
+   txData[1] = triWeight & 0xFF
+   self.write_data(self.REG_SET_TRIGGER_WEIGHT)
+   self.write_data(txData[0])
+   self.write_data(txData[1])
+   time.sleep(0.05)
+  def setThreshold(self,threshold):
+   txData = [0,0]
+   txData[0] = threshold >> 8
+   txData[1] = threshold & 0xFF
+   self.write_data(self.REG_SET_CAL_THRESHOLD)
+   self.write_data(txData[0])
+   self.write_data(txData[1])
+   time.sleep(0.05)
   def write_data(self, data):
     self.i2cbus.write_byte(self._addr ,data)
     

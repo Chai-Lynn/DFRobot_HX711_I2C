@@ -39,8 +39,9 @@ public:
   #define REG_DATA_GET_RAM_DATA       0x66     /*Get sensor raw data*/
   #define REG_DATA_GET_CALIBRATION    0x67     /*获取自动校准值*/
   #define REG_DATA_GET_PEEL_FLAG      0x69     /*获取去皮标致位*/
-  #define REG_DATA_INIT_SENSOR        0x70     /*获取去皮标致位*/
-  
+  #define REG_DATA_INIT_SENSOR        0x70     /*模块初始化*/
+  #define REG_SET_CAL_THRESHOLD       0x71     /*设置校准触发阈值*/
+  #define REG_SET_TRIGGER_WEIGHT      0x72     /*设置校准重量*/
     /*!
      * @brief Constructor 
      * @param pWire I2c controller
@@ -72,7 +73,16 @@ public:
      * @return return the read calibration value
      */
     void  setCalibration(float value);
-
+	
+    /**
+     * @brief 设置重量传感器模块自动校准时的触发阈值(g)
+     */
+    void  setThreshold(uint16_t threshold);
+    
+    /**
+     * @brief 设置重量传感器模块自动校准时的校准重量(g)
+     */
+    void  setCalWeight(uint16_t triWeight);
 private:
     long getValue();
     bool peelFlag();
