@@ -63,6 +63,15 @@ float getCalibration();
  */
 void  setCalibration(float value);
 
+/**
+ * @brief 设置重量传感器模块自动校准时的触发阈值(g)
+ */
+void  setThreshold(uint16_t threshold);
+    
+/**
+ * @brief 设置重量传感器模块自动校准时的校准重量(g)
+ */
+void  setCalWeight(uint16_t triWeight);
 
 ```
 
