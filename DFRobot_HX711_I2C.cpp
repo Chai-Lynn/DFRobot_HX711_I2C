@@ -34,9 +34,14 @@ int DFRobot_HX711_I2C::begin(void){
 float DFRobot_HX711_I2C::readWeight(uint8_t times){
 
   long value = average(times);
-  if(peelFlag()) {
+  uint8_t ppFlag = peelFlag();
+  if(ppFlag == 1) {
      //pFlag = 1;
      _offset = average(times);
+    //Serial.println("_offset");
+  } else if(ppFlag == 2){
+    _calibration = getCalibration();
+    //Serial.println("_calibration");
   }
   //Serial.println(value);
   return (((float)value- _offset)/_calibration) ;
@@ -70,20 +75,25 @@ float DFRobot_HX711_I2C::getCalibration()
 
 void DFRobot_HX711_I2C::setCalibration(float value)
 {
+  
   _calibration = value;
+  //_offset = average(10);
 
 }
 
-bool DFRobot_HX711_I2C::peelFlag(){
+uint8_t DFRobot_HX711_I2C::peelFlag(){
 
 
    uint8_t data[1];
    readReg(REG_DATA_GET_PEEL_FLAG,data,1);
+   //Serial.println(data[0]);
    if(data[0] == 1){
        DBG("---------------------------------");
-      return true;
+      return 1;
+   }else if(data[0] == 2){
+      return 2;
    }else{
-      return false;
+      return 0;
    }
 }
 

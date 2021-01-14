@@ -85,7 +85,7 @@ public:
     void  setCalWeight(uint16_t triWeight);
 private:
     long getValue();
-    bool peelFlag();
+    uint8_t peelFlag();
     long average(uint8_t times = 10);
   /**
    * @brief Write command into sensor chip 
