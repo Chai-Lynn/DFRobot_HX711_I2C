@@ -52,7 +52,7 @@ class DFRobot_HX711_I2C(object):
         if data == 0 :
            times = times -1
         else:
-           sum = sum + data;
+           sum = sum + data
     #print(times)
     #print("--------------------------")
     if(times == 0):
@@ -80,9 +80,9 @@ class DFRobot_HX711_I2C(object):
       data = self.read_reg(self.REG_DATA_GET_RAM_DATA,4);
       value = 0;
       if(data[0] == 0x12):
-        value = long(data[1])
-        value = long((value << 8) | data[2]);
-        value = long((value << 8) | data[3]);
+        value = (data[1])
+        value = ((value << 8) | data[2])
+        value = ((value << 8) | data[3])
       else:
         return 0
       return value^0x800000
