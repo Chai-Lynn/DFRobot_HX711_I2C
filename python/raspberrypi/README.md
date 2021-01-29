@@ -70,8 +70,8 @@ Provide an raspberrypi library to get weight by reading data from HX711.
 
 MCU                | Work Well    | Work Wrong   | Untested    | Remarks
 ------------------ | :----------: | :----------: | :---------: | -----
-Raspberry pe 3       |      √       |              |             | 
-Raspberry pe 4       |      √       |              |             | 
+Raspberry pi 3       |      √       |              |             | 
+Raspberry pi 4       |      √       |              |             | 
 
 
 ## History
