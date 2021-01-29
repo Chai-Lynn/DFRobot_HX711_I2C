@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-   @file getCalibration.ino
-   @brief 获取传感器的校准值，在运行此程序前要对传感器进行校准操作
-   @n 1.先要按下传感器模块上的CAL按钮,传感器会自动去除皮重,完成后CAL指示灯会点亮
-   @n 2.5s内放上一定质量的物体(通过setCalWeight函数设置)，指示灯熄灭表示模块会开始校准
-   @n 3.校准完成后指示灯再一秒内闪烁3次表示校准完成
-   @n 4.若没有放上100g物品，则指示灯在五秒后熄灭，此次校准无效
-   @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
-   @licence     The MIT License (MIT)
-   @author [fengli](li.feng@dfrobot.com)
-   @version  V1.0
-   @date  2020-12-26
-   @get from https://www.dfrobot.com
-   @https://github.com/DFRobot/DFRobot_HX711_I2C
+  @file getCalibration.py
+  @brief to get the calibration value of the sensor and to calibrate the sensor before running this program
+  @N 1. Press the CAL button on the sensor module first, and the sensor will automatically remove the tare weight. After completion, the CAL indicator will be on
+  @n Put a certain mass object (set by setcalWeight function) within 2.5s, and the indicator light turns off to indicate that the module will start calibration
+  @n 3. After the completion of calibration, the indicator flashes 3 times within one second to indicate the completion of calibration
+  @N 4. If 100G items are not placed, the indicator light will be extinguished after 5 seconds. This calibration is invalid
+  @copyright Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+  @licence The MIT License (MIT)
+  @author [fengli](li.feng@dfrobot.com)
+  @ version V1.0
+  @date 2020-12-26
+  @get from https://www.dfrobot.com
+  @https://github.com/DFRobot/DFRobot_HX711_I2C
 """
 import sys
 import time
@@ -28,13 +28,14 @@ IIC_ADDRESS      = 0x64            # default iic device address
 hx711 = DFRobot_HX711_I2C(IIC_MODE ,IIC_ADDRESS)
 
 time.sleep(0.1)
-#设置重量传感器模块自动校准时的触发阈值(g)
+# Set the trigger threshold (G) for automatic calibration of the weight sensor module. When only the weight of the object on the scale is greater than this value, the module will start the calibration process
+# This value cannot be greater than the calibration weight of the setCalWeight() setting
 hx711.setThreshold(50)
-#设置重量传感器模块自动校准时的校准重量(g)
+# Set the calibration weight when the weight sensor module is automatically calibrated (g)
 hx711.setCalWeight(100)
 
 print("the calibration value of the sensor is: ")
-#获取自动校准值
+# Obtain the calibration value. The accurate calibration value can be obtained after the calibration operation is completed
 calibration = hx711.getCalibration()
 print(calibration[0])
 time.sleep(0.1)

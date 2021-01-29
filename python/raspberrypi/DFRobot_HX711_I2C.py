@@ -1,4 +1,15 @@
 # -*- coding: utf-8 -*
+""" 
+  @file DFRobot_HX711_I2C.py
+  @brief Define the basic structure of class DFRobot_HX711_I2C 
+  @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+  @licence     The MIT License (MIT)
+  @author [fengli](li.feng@dfrobot.com)
+  @version  V1.0
+  @date  2021-1-29
+  @get from https://www.dfrobot.com
+  @url https://github.com/DFRobot/DFRobot_HX711_I2C
+"""
 import serial
 import time
 import smbus
@@ -28,21 +39,92 @@ class DFRobot_HX711_I2C(object):
     self.i2cbus = smbus.SMBus(bus)
     self._addr = address
     self.idle =    0
-
+  '''
+    @brief Module initialization
+  '''
   def begin(self):
     self._offset = self.average(20)
     time.sleep(0.05)
-
+    
+  '''
+    @brief Get the weight of the object
+    @param times: Take the average from the number of measurements
+    @return  The object weight, (g)
+  '''
   def readWeight(self,times):
     value = self.average(times)
     time.sleep(0.05)
-    if self.peelFlag() == True:
+    ppFlag = self.peelFlag()
+    if ppFlag == 1:
       self._offset = self.average(times)
-      #Serial.println("pppppppppppppppppppppp----------------------");
+    elif ppFlag == 2:
+      self._calibration = self.getCalibration()
+    #Serial.println("pppppppppppppppppppppp----------------------");
     #print(value);
     #print(self._offset);
     return ((value - self._offset)/self._calibration) 
 
+   
+  '''
+    @brief Obtain the automatic calibration value of weight sensor module
+    @return Automatic calibration value
+  '''
+  def getCalibration(self):
+      data = self.read_reg(self.REG_DATA_GET_CALIBRATION,4);
+      aa= bytearray(data) 
+      
+      return struct.unpack('>f', aa)
+
+  '''
+    @brief Manually set the automatic calibration value
+    @param times: the value of Calibration
+  '''
+  def setCalibration(self ,value):
+      self._offset = self.average(15)
+      self._calibration = value
+  def peelFlag(self):
+      data = self.read_reg(self.REG_DATA_GET_PEEL_FLAG,1);
+      if(data[0] == 0x01 or data[0] == 129):
+        return 1
+      elif data[0] == 0x02:
+        return 2
+      else:
+        return 0
+  def getValue(self):
+      data = self.read_reg(self.REG_DATA_GET_RAM_DATA,4);
+      value = 0;
+      if(data[0] == 0x12):
+        value = (data[1])
+        value = ((value << 8) | data[2])
+        value = ((value << 8) | data[3])
+      else:
+        return 0
+      return value^0x800000
+  '''
+    @brief Set calibration weight
+    @param times: The calibration weight(g)
+  '''
+  def setCalWeight(self,triWeight):
+   txData = [0,0]
+   txData[0] = triWeight >> 8
+   txData[1] = triWeight & 0xFF
+   self.write_data(self.REG_SET_TRIGGER_WEIGHT)
+   self.write_data(txData[0])
+   self.write_data(txData[1])
+   time.sleep(0.05)
+  '''
+    @brief Set calibration threshold value, when the calibration weight is greater than this value, sensor calibration will begin
+    @param times: The threshold value(g)
+  '''
+  def setThreshold(self,threshold):
+   txData = [0,0]
+   txData[0] = threshold >> 8
+   txData[1] = threshold & 0xFF
+   self.write_data(self.REG_SET_CAL_THRESHOLD)
+   self.write_data(txData[0])
+   self.write_data(txData[1])
+   time.sleep(0.05)
+   
   def average(self,times):
     
     sum = 0
@@ -58,50 +140,6 @@ class DFRobot_HX711_I2C(object):
     if(times == 0):
        times =1
     return  sum/times
-    
-   
-  ''' Read the result data of the register '''
-  def getCalibration(self):
-      data = self.read_reg(self.REG_DATA_GET_CALIBRATION,4);
-      aa= bytearray(data) 
-      
-      return struct.unpack('>f', aa)
-  ''' Modify i2c device number '''
-  def setCalibration(self ,value):
-      self._offset = self.average(15)
-      self._calibration = value
-  def peelFlag(self):
-      data = self.read_reg(self.REG_DATA_GET_PEEL_FLAG,1);
-      if(data[0] == 0x01 or data[0] == 129):
-        return True
-      else:
-        return False
-  def getValue(self):
-      data = self.read_reg(self.REG_DATA_GET_RAM_DATA,4);
-      value = 0;
-      if(data[0] == 0x12):
-        value = (data[1])
-        value = ((value << 8) | data[2])
-        value = ((value << 8) | data[3])
-      else:
-        return 0
-      return value^0x800000
-  def setCalWeight(self,triWeight):
-   txData = [0,0]
-   txData[0] = triWeight >> 8
-   txData[1] = triWeight & 0xFF
-   self.write_data(self.REG_SET_TRIGGER_WEIGHT)
-   self.write_data(txData[0])
-   self.write_data(txData[1])
-   time.sleep(0.05)
-  def setThreshold(self,threshold):
-   txData = [0,0]
-   txData[0] = threshold >> 8
-   txData[1] = threshold & 0xFF
-   self.write_data(self.REG_SET_CAL_THRESHOLD)
-   self.write_data(txData[0])
-   self.write_data(txData[1])
-   time.sleep(0.05)
   def write_data(self, data):
     self.i2cbus.write_byte(self._addr ,data)
     

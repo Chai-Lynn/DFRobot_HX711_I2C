@@ -1,13 +1,14 @@
 /*!
-   @file readWeight.ino
-   @brief 获取物体的重量,按下模块上的rst按键，程序会自动去皮
-   @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
-   @licence     The MIT License (MIT)
-   @author [fengli](li.feng@dfrobot.com)
-   @version  V1.0
-   @date  2020-12-26
-   @get from https://www.dfrobot.com
-   @https://github.com/DFRobot/DFRobot_HX711_I2C
+ * @file readWeight.ino
+ * @brief Get the weight of the object, press the RST button on the module, the 
+ * @n program will automatically remove the skin
+ * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+ * @licence     The MIT License (MIT)
+ * @author [fengli](li.feng@dfrobot.com)
+ * @version  V1.0
+ * @date  2020-12-26
+ * @get from https://www.dfrobot.com
+ * @https://github.com/DFRobot/DFRobot_HX711_I2C
 */
 
 #include <DFRobot_HX711_I2C.h>
@@ -26,12 +27,12 @@ void setup() {
     Serial.println("The initialization of the chip is failed, please confirm whether the chip connection is correct");
     delay(1000);
   }
-  //手动设置校准校准值
+  //Manually set the calibration values
   MyScale.setCalibration(2236.f);
 }
 
 void loop() {
-  // 获取物体重量
+  // Get the weight of the object
   Serial.print("weight is: ");
   Serial.print(MyScale.readWeight(), 1);
   Serial.println(" g");

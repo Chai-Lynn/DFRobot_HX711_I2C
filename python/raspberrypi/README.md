@@ -27,39 +27,51 @@ Provide an raspberrypi library to get weight by reading data from HX711.
 
 ## Methods
 
-```C++
-
+```python
+  
+  '''
+    @brief Module initialization
+  '''
   def begin():
-    '''
-      @brief 模块初始化
-    '''
-
+  
+  '''
+    @brief Get the weight of the object
+    @param times: Take the average from the number of measurements
+    @return  The object weight, (g)
+  '''
   def readWeight(self ,times):
-    '''
-      @brief 获取物体重量
-      @param times: 从这么多测量次数中求取平均
-      @return  物体重量, (g)
-    '''
 
+  '''
+    @brief Obtain the automatic calibration value of weight sensor module
+    @return Automatic calibration value
+  '''
   def getCalibration(self):
-    '''
-      @brief 获取重量传感器模块自动校准值
-      @return 自动校准值
-    '''
 
-  def setCalibration(self):
-    '''
-      @brief 手动设置自动校准值
-    '''
+  '''
+    @brief Manually set the automatic calibration value
+    @param times: the value of Calibration
+  '''
+  def setCalibration(self,value):
+  
+  '''
+    @brief Set calibration weight
+    @param times: The calibration weight(g)
+  '''
+  def setCalWeight(self,triWeight):
+  
+  '''
+    @brief Set calibration threshold value, when the calibration weight is greater than this value, sensor calibration will begin
+    @param times: The threshold value(g)
+  '''
+  def setThreshold(self,threshold):
 ```
 
 ## Compatibility
 
 MCU                | Work Well    | Work Wrong   | Untested    | Remarks
 ------------------ | :----------: | :----------: | :---------: | -----
-
-树莓派 3       |      √       |              |             | 
-树莓派 4       |      √       |              |             | 
+Raspberry pe 3       |      √       |              |             | 
+Raspberry pe 4       |      √       |              |             | 
 
 
 ## History

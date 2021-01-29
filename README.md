@@ -28,51 +28,50 @@ To use this library, first download the library file, paste it into the \Arduino
 ## Methods
 
 ```C++
+  /*!
+   * @brief Constructor 
+   * @param pWire I2c controller
+   * @param addr  I2C address(0x64/0x65/0x660x67)
+   */
+  DFRobot_HX711_I2C(TwoWire * pWire = &Wire,uint8_t addr = HX711_I2C_ADDR);
+  
+  /**
+   * @brief init function
+   * @return Return 1 if initialization succeeds, otherwise return non-zero and error code.
+   */
+  int begin(void);
+  
+  /**
+   * @brief Get the weight of the object
+   * @param times Take the average several times
+   * @return Return the read weight value, unit: g
+   */
+  float readWeight(uint8_t times = 12);
+  
+  /**
+   * @brief get calibration value 
+   * @return return the read calibration value
+   */
+  float getCalibration();
 
-#include <DFRobot_HX711_I2C.h>
+  /**
+   * @brief Set calibration value
+   * @param value
+   * @return return the read calibration value
+   */
+  void  setCalibration(float value);
 
-/*!
- * @brief Constructor 
- * @param pWire I2c controller
- * @param addr  I2C address(0x64/0x65/0x660x67)
- */
-DFRobot_HX711_I2C(TwoWire * pWire = &Wire,uint8_t addr = HX711_I2C_ADDR);
-
-/**
- * @brief init function
- * @return Return 1 if initialization succeeds, otherwise return non-zero and error code.
- */
-int begin(void);
-
-/**
- * @brief Get the weight of the object
- * @param times Take the average several times
- * @return Return the read weight value, unit: g
- */
-float readWeight(uint8_t times = 12);
-
-/**
- * @brief get calibration value 
- * @return return the read calibration value
- */
-float getCalibration();
-
-/**
- * @brief Set calibration value
- * @return return the read calibration value
- */
-void  setCalibration(float value);
-
-/**
- * @brief 设置重量传感器模块自动校准时的触发阈值(g)
- */
-void  setThreshold(uint16_t threshold);
-    
-/**
- * @brief 设置重量传感器模块自动校准时的校准重量(g)
- */
-void  setCalWeight(uint16_t triWeight);
-
+  /**
+   * @brief Set the trigger threshold when the weight sensor module is automatically calibrated(g)
+   * @param threshold
+   */
+  void  setThreshold(uint16_t threshold);
+  
+  /**
+   * @brief Set the calibration weight when the weight sensor module is automatically calibrated(g)
+   * @param triWeight 
+   */
+  void  setCalWeight(uint16_t triWeight);
 ```
 
 ## Compatibility
@@ -82,8 +81,8 @@ MCU                | Work Well    | Work Wrong   | Untested    | Remarks
 Arduino uno        |      √       |              |             | 
 FireBeetle-ESP8266        |      √       |              |             | 
 FireBeetle-ESP32        |      √       |              |             | 
-掌控板        |      √       |              |             | 
-树莓派        |      √       |              |             | 
+mpython        |      √       |              |             | 
+
 microbit        |      √       |              |             | 
 
 
