@@ -82,7 +82,6 @@ Arduino uno        |      √       |              |             |
 FireBeetle-ESP8266        |      √       |              |             | 
 FireBeetle-ESP32        |      √       |              |             | 
 mpython        |      √       |              |             | 
-
 microbit        |      √       |              |             | 
 
 
